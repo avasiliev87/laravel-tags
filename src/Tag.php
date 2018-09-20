@@ -30,7 +30,7 @@ class Tag extends Model implements Sortable
     {
         $locale = $locale ?? app()->getLocale();
 
-        return $query->whereRaw('LOWER(JSON_EXTRACT(name, "$.'.$locale.'")) like ?', ['"%'.strtolower($name).'%"']);
+        return $query->whereRaw('JSON_EXTRACT(name, "$.'.$locale.'") like ?', ['"%'.$name.'%"']);
     }
 
     /**
@@ -63,7 +63,7 @@ class Tag extends Model implements Sortable
         $locale = $locale ?? app()->getLocale();
 
         return static::query()
-            ->whereRaw('LOWER(JSON_EXTRACT(name, "$.'.$locale.'")) = ?', [strtolower($name)])
+            ->whereRaw('JSON_EXTRACT(name, "$.'.$locale.'") = ?', [$name])
             ->where('type', $type)
             ->first();
     }
